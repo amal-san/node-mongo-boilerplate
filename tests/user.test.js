@@ -33,20 +33,6 @@ describe('PUT /user/create/', () => {
     });
 });
 
-describe('POST /user/find/:username', () => {
-    it('It should find a user', (done) => {
-      chai
-        .request(server)
-        .post('/user/find/')
-        .send({'username': "Charlie"})
-        .end((err, res) => {
-          res.should.have.status(200);
-          (res.body).should.be.a('object');
-          done(err);
-        });
-    });
-});
-
 
 describe('PATCH /user/update/', () => {
     it('It should update a user', (done) => {
@@ -61,6 +47,22 @@ describe('PATCH /user/update/', () => {
         });
     });
 });
+
+
+describe('POST /user/find/', () => {
+    it('It should find a user', (done) => {
+      chai
+        .request(server)
+        .post('/user/find/')
+        .send({'username': "John"})
+        .end((err, res) => {
+          res.should.have.status(200);
+          (res.body).should.be.a('object');
+          done(err);
+        });
+    });
+});
+
 
 
 describe('DELETE /user/delete/', () => {
