@@ -8,11 +8,11 @@ chai.should();
 chai.use(chaiHttp);
 
 
-describe('GET ' + URL +'/user/all', () => {
-    it('it should return whole list of users', (done) => {
+describe('GET ' + URL +'/book/all', () => {
+    it('it should return whole list of books', (done) => {
       chai
         .request(server)
-        .get('/user/all')
+        .get('/book/all')
         .end((err, res) => {
           res.should.have.status(200);
           done(err);
@@ -20,27 +20,12 @@ describe('GET ' + URL +'/user/all', () => {
     });
 });
 
-describe('PUT ' + URL +'/user/create/', () => {
-    it('It should create a new user', (done) => {
+describe('PUT ' + URL +'/book/create/', () => {
+    it('It should create a new book', (done) => {
       chai
         .request(server)
-        .put('/user/create')
-        .send({'username': "Charlie", 'password':"1234"})
-        .end((err, res) => {
-          res.should.have.status(200);
-          (res.body).should.be.a('object');
-          done(err);
-        });
-    });
-});
-
-
-describe('PATCH  ' + URL +'/user/update/', () => {
-    it('It should update a user', (done) => {
-      chai
-        .request(server)
-        .patch('/user/update')
-        .send({'find_username': "Charlie", 'update_username': "John"})
+        .put('/book/create')
+        .send({'name': "Theory of everything", 'author':"Stephan hawkings", 'price':'100','description':'Based on the famous physist Stephan Hawkings','genre':'Biography'})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
@@ -50,12 +35,27 @@ describe('PATCH  ' + URL +'/user/update/', () => {
 });
 
 
-describe('POST  ' + URL +'/user/find/', () => {
-    it('It should find a user', (done) => {
+describe('PATCH  ' + URL +'/book/update/', () => {
+    it('It should update a book', (done) => {
       chai
         .request(server)
-        .post('/user/find/')
-        .send({'username': "John"})
+        .patch('/book/update')
+        .send({'find_name': "Theory of everything", 'update_name': "Wings of fire"})
+        .end((err, res) => {
+          res.should.have.status(200);
+          (res.body).should.be.a('object');
+          done(err);
+        });
+    });
+});
+
+
+describe('POST  ' + URL +'/book/find/', () => {
+    it('It should find a book', (done) => {
+      chai
+        .request(server)
+        .post('/book/find/')
+        .send({'name': "Wings of fire"})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
@@ -66,12 +66,12 @@ describe('POST  ' + URL +'/user/find/', () => {
 
 
 
-describe('DELETE ' + URL +'/user/delete/', () => {
-    it('It should delete a user', (done) => {
+describe('DELETE ' + URL +'/book/delete/', () => {
+    it('It should delete a book', (done) => {
       chai
         .request(server)
-        .delete('/user/delete')
-        .send({'username':"John"})
+        .delete('/book/delete')
+        .send({'name':"Wings of fire"})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
