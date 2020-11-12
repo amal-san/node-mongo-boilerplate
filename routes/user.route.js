@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const user = require('../controllers/user.controller');
 
+
 //SHOWS All USERS
 router.get('/all',user.user_all);
 
