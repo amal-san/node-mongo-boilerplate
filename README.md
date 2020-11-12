@@ -1,6 +1,6 @@
 # :stew: node-mongo-boilerplate 
 
-NodeJS, MongoDB, Express Boilerplate code for fast development
+NodeJS, MongoDB, Express Boilerplate code for faster development and deployment
 
 ### Installation
 - `git clone https://github.com/amal-san/node-mongo-boilerplate `
