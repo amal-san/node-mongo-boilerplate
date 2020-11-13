@@ -1,30 +1,35 @@
 const User = require('../models/user.model');
+const Joi = require('joi'); 
+const validate = require('../utils/user.validate')
+
 
 exports.user_create = async (req, res) => {
 
-    let user = new User({
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
-        email:req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-    })
-    try {
-        if(user.username != undefined && user.password != undefined && user.first_name != undefined ){
+    const { value, error } = validate.createUser(req); 
+    const valid = error == null; 
+  
+    if (valid) { 
+        let user = new User(value)
+        try {
             const isUserCreate = await user.save()
             console.log(isUserCreate)
             res.send(isUserCreate == null ? 'user cannot be created':isUserCreate)
+            return;
+    
+        }catch(e){
+            console.log(e)
+            res.send("error occured while creating user...")
+            return e
         }
-        else {
-            res.send("Pass every parameters")
-        }
-        return;
+        
+    } else { 
+        const { details } = error; 
+        const message = details.map(i => i.message).join(',');
+        res.status(422).json({ error: message }) 
+    } 
 
-    }catch(e){
-        console.log(e)
-        res.send("error occured while creating user...")
-        return e
-    }
+
+
 }
 
 exports.user_all = async(req,res) => {
@@ -44,58 +49,63 @@ exports.user_all = async(req,res) => {
 
 
 exports.user_delete = async(req,res) => {
-    var username = req.body.username
-    try {
-        if(username.length > 0) {
-            const isUserRemove = await User.findOneAndRemove({ username: username },{new: true})
+
+    const { value, error } = validate.findAndDeleteUser(req); 
+    const valid = error == null; 
+    if(valid) {
+        try {
+            const isUserRemove = await User.findOneAndRemove(value,{new: true})
             console.log(isUserRemove)
             res.send(isUserRemove == null ? 'no user exit':isUserRemove)
-        }else {
-            res.send("Pass username to be deleted")
+            return;
+    
         }
-        
+        catch(err){
+            res.send("error occured while deleting record..")
+            return err
+        }
+
+    }else {
+        const { details } = error; 
+        const message = details.map(i => i.message).join(',');
+        res.status(422).json({ error: message }) 
     }
-    catch(err){
-        res.send("error occured while deleting record..")
-        return err
-    }
+    
     return;
 }
 
 exports.user_update = async(req,res) => {
 
-    var usernameToFind = req.body.find_username
-    let user = new User({
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
-        email:req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-    })
+    const { value, error } = validate.updateUser(req); 
+    const valid = error == null; 
+    console.log(error)
+    if(valid) {
     try {
-        if(usernameToFind != undefined && user != undefined) {
-            const updateUser = await User.findOneAndUpdate(
-                {username: usernameToFind },
-                {$set:{ first_name:user.first_name,
-                        last_name:user.last_name,
-                        email:user.email,
-                        username:user.username,
-                        password:user.password,
-                }}, 
-                {new: true},
-            )
-            console.log(updateUser)
-            res.send(updateUser == null ? 'no user was found':updateUser)
-        }else {
-            res.send("Pass usernames for updating")
-        }
-        
+        console.log(value.username)
+        const updateUser = await User.findOneAndUpdate(
+            {username: value.find_username },
+            {$set:{
+                first_name:value.first_name,
+                last_name:value.last_name,
+                email:value.email,
+                username:value.username,
+                password:value.password,
+            }}, 
+            {new: true}
+        )
+        console.log(updateUser)
+        res.send(updateUser == null ? 'no user was found':updateUser)
+        return;
     }
     catch(err){
         res.send("error occured while updating..")
-        return err
+        return err}
     }
-    return;
+    else {
+        const { details } = error; 
+        const message = details.map(i => i.message).join(',');
+        res.status(422).json({ error: message }) 
+    }
 }
 
 exports.user_delete_all = async(req,res) => {
@@ -112,22 +122,27 @@ exports.user_delete_all = async(req,res) => {
 }
 
 exports.user_findByPost = async(req,res) => {
-    var username = req.body.username
-    try {
-        if(username != undefined){
-            const userExits = await User.findOne({username:username})
+
+    const { value, error } = validate.findAndDeleteUser(req); 
+    const valid = error == null; 
+    if(valid) {
+        try {
+            const userExits = await User.findOne(value)
             console.log(userExits)
             res.send(userExits == null ? 'no user such user exit':userExits)
-        }else {
-            res.send("Pass a username to find")
-
+            return;
         }
-            
+        catch(err) {
+            console.log(e)
+            res.send(`error occured while finding user...`)
+            return err
+        }
     }
-    catch(err) {
-        console.log(e)
-        res.send(`error occured while finding user...`)
-        return err
+    else {
+        const { details } = error; 
+        const message = details.map(i => i.message).join(',');
+        res.status(422).json({ error: message }) 
     }
+
     return;
 }

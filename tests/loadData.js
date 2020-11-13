@@ -12,8 +12,8 @@ describe('Loading 50 user data to database..', () => {
       for(var i=1;i<50;i++){
         chai
         .request(server)
-        .put('/user/create')
-        .send({'username':faker.internet.userName() , 'password':faker.internet.password()})
+        .post('/user/create')
+        .send({'username':faker.internet.userName() , 'password':faker.internet.password(),'first_name':faker.name.firstName(),'last_name':faker.name.lastName(),'email':faker.internet.email()})
         .end((err, res) => {
         res.should.have.status(200);
         (res.body).should.be.a('object');

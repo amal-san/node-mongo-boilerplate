@@ -42,7 +42,7 @@ describe('PUT  ' + URL +'/user/update/', () => {
         .put('/user/update')
         .send({'find_username': "Char002",
                'first_name': "John",
-               'last_name': "Duo",
+               'last_name': "Domenic",
                'email': "JohnDuo@gmail.com",
                'username': "John12",
                'password':"QWERY@#$"
