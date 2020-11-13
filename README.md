@@ -17,8 +17,8 @@ NodeJS, MongoDB, Express Boilerplate code for faster development and deployment
 
 #### :book: Book Model
 - GET : http://localhost:3000/book/all
-- PUT : http://localhost:3000/book/create
-- PATCH : http://localhost:3000/book/update
+- POST : http://localhost:3000/book/create
+- PUT : http://localhost:3000/book/update
 - POST : http://localhost:3000/book/find
 - DELETE : http://localhost:3000/book/delete
 - DELETE : http://localhost:3000/book/delete/all
