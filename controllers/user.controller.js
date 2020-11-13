@@ -10,9 +10,14 @@ exports.user_create = async (req, res) => {
         password: req.body.password,
     })
     try {
-        const isUserCreate = await user.save()
-        console.log(isUserCreate)
-        res.send(isUserCreate == null ? 'user cannot be created':isUserCreate)
+        if(user.username != undefined && user.password != undefined && user.first_name != undefined ){
+            const isUserCreate = await user.save()
+            console.log(isUserCreate)
+            res.send(isUserCreate == null ? 'user cannot be created':isUserCreate)
+        }
+        else {
+            res.send("Pass every parameters")
+        }
         return;
 
     }catch(e){
@@ -24,6 +29,7 @@ exports.user_create = async (req, res) => {
 
 exports.user_all = async(req,res) => {
     try {
+        
         const allUsers = await User.find({})
         res.send(allUsers == null ? 'No data empty collection':allUsers)
         console.log(allUsers)
