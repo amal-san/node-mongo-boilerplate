@@ -4,6 +4,7 @@ NodeJS, MongoDB, Express Boilerplate code for faster development and deployment
 
 ### Installation
 - `git clone https://github.com/amal-san/node-mongo-boilerplate `
+- `cd node-mongo-boilerplate`
 - `npm install`
 - Setup MongoDB for accept connections
 - `npm start`
