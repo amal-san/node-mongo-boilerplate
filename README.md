@@ -4,6 +4,7 @@ NodeJS, MongoDB, Express Boilerplate code for faster development and deployment
 
 ### Installation
 - `git clone https://github.com/amal-san/node-mongo-boilerplate `
+- `cd node-mongo-boilerplate`
 - `npm install`
 - Setup MongoDB for accept connections
 - `npm start`
@@ -15,13 +16,13 @@ NodeJS, MongoDB, Express Boilerplate code for faster development and deployment
 
 ### :zap: URLS
 
-#### :book: Book Model
-- GET : http://localhost:3000/book/all
-- POST : http://localhost:3000/book/create
-- PUT : http://localhost:3000/book/update
-- POST : http://localhost:3000/book/find
-- DELETE : http://localhost:3000/book/delete
-- DELETE : http://localhost:3000/book/delete/all
+#### :beginner: User Model
+- GET : http://localhost:3000/user/all
+- POST : http://localhost:3000/user/create
+- PUT : http://localhost:3000/user/update
+- POST : http://localhost:3000/user/find
+- DELETE : http://localhost:3000/user/delete
+- DELETE : http://localhost:3000/user/delete/all
 
 
 
