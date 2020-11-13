@@ -2,6 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
 var faker = require('faker');
+var colors = require('colors/safe');
+
 
 chai.should();
 
@@ -20,7 +22,7 @@ describe('Loading 50 user data to database..', () => {
         })}
         done();
         setTimeout((function() {
-            return process.exit()
+            throw new Error(colors.brightYellow.bold("Data Loading Completed don't worry..."));
         }), 1500);
     });
 });
