@@ -20,11 +20,11 @@ describe('GET ' + URL +'/user/all', () => {
     });
 });
 
-describe('PUT ' + URL +'/user/create/', () => {
+describe('POST ' + URL +'/user/create/', () => {
     it('It should create a new user', (done) => {
       chai
         .request(server)
-        .put('/user/create')
+        .post('/user/create')
         .send({'username': "Charlie", 'password':"1234"})
         .end((err, res) => {
           res.should.have.status(200);
@@ -35,11 +35,11 @@ describe('PUT ' + URL +'/user/create/', () => {
 });
 
 
-describe('PATCH  ' + URL +'/user/update/', () => {
+describe('PUT  ' + URL +'/user/update/', () => {
     it('It should update a user', (done) => {
       chai
         .request(server)
-        .patch('/user/update')
+        .put('/user/update')
         .send({'find_username': "Charlie", 'update_username': "John"})
         .end((err, res) => {
           res.should.have.status(200);

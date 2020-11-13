@@ -8,13 +8,13 @@ router.get('/all',user.user_all);
 
 
 //CREATE NEW USER
-router.put('/create', user.user_create);
+router.post('/create', user.user_create);
 
 //FIND USER WITH USERNAME
 router.post('/find', user.user_findByPost);
 
 //UPDATE USER
-router.patch('/update',user.user_update)
+router.put('/update',user.user_update)
 
 //DELETE USER
 router.delete('/delete', user.user_delete);

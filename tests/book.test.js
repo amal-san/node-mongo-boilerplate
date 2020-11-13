@@ -20,11 +20,11 @@ describe('GET ' + URL +'/book/all', () => {
     });
 });
 
-describe('PUT ' + URL +'/book/create/', () => {
+describe('POST ' + URL +'/book/create/', () => {
     it('It should create a new book', (done) => {
       chai
         .request(server)
-        .put('/book/create')
+        .post('/book/create')
         .send({'name': "Theory of everything", 'author':"Stephan hawkings", 'price':'100','description':'Based on the famous physist Stephan Hawkings','genre':'Biography'})
         .end((err, res) => {
           res.should.have.status(200);
@@ -35,11 +35,11 @@ describe('PUT ' + URL +'/book/create/', () => {
 });
 
 
-describe('PATCH  ' + URL +'/book/update/', () => {
+describe('PUT  ' + URL +'/book/update/', () => {
     it('It should update a book', (done) => {
       chai
         .request(server)
-        .patch('/book/update')
+        .put('/book/update')
         .send({'find_name': "Theory of everything", 'update_name': "Wings of fire"})
         .end((err, res) => {
           res.should.have.status(200);
