@@ -1,21 +1,18 @@
-const e = require('express');
 const User = require('../models/user.model');
 
 exports.user_create = async (req, res) => {
+
     let user = new User({
+        first_name:req.body.first_name,
+        last_name:req.body.last_name,
+        email:req.body.email,
         username: req.body.username,
         password: req.body.password,
     })
     try {
-        if(user.username  != undefined && user.password != undefined ){
-            const isUserCreate = await user.save()
-            console.log(isUserCreate)
-            res.send(isUserCreate == null ? 'user cannot be created':isUserCreate)
-
-        }
-        else {
-            res.send("Pass both parameters")
-        }
+        const isUserCreate = await user.save()
+        console.log(isUserCreate)
+        res.send(isUserCreate == null ? 'user cannot be created':isUserCreate)
         return;
 
     }catch(e){
@@ -44,7 +41,7 @@ exports.user_delete = async(req,res) => {
     var username = req.body.username
     try {
         if(username.length > 0) {
-            const isUserRemove = await User.findOneAndRemove({ username: username })
+            const isUserRemove = await User.findOneAndRemove({ username: username },{new: true})
             console.log(isUserRemove)
             res.send(isUserRemove == null ? 'no user exit':isUserRemove)
         }else {
@@ -62,19 +59,29 @@ exports.user_delete = async(req,res) => {
 exports.user_update = async(req,res) => {
 
     var usernameToFind = req.body.find_username
-    var usernameToUpdate = req.body.update_username
-
+    let user = new User({
+        first_name:req.body.first_name,
+        last_name:req.body.last_name,
+        email:req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+    })
     try {
-        if(usernameToFind != undefined && usernameToUpdate != undefined) {
+        if(usernameToFind != undefined && user != undefined) {
             const updateUser = await User.findOneAndUpdate(
                 {username: usernameToFind },
-                {$set:{username:usernameToUpdate}}, 
+                {$set:{ first_name:user.first_name,
+                        last_name:user.last_name,
+                        email:user.email,
+                        username:user.username,
+                        password:user.password,
+                }}, 
                 {new: true},
             )
             console.log(updateUser)
             res.send(updateUser == null ? 'no user was found':updateUser)
         }else {
-            res.send("Pass both usernames for updating")
+            res.send("Pass usernames for updating")
         }
         
     }

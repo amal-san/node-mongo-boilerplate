@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 
 describe('GET ' + URL +'/user/all', () => {
-    it('it should return whole list of users', (done) => {
+    it('it should return whole list of users in database', (done) => {
       chai
         .request(server)
         .get('/user/all')
@@ -21,11 +21,11 @@ describe('GET ' + URL +'/user/all', () => {
 });
 
 describe('POST ' + URL +'/user/create/', () => {
-    it('It should create a new user', (done) => {
+    it('It should create a new user with username:Char002', (done) => {
       chai
         .request(server)
         .post('/user/create')
-        .send({'username': "Charlie", 'password':"1234"})
+        .send({'username': "Char002", 'password':"1234",'first_name':"Charlie"})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
@@ -36,11 +36,17 @@ describe('POST ' + URL +'/user/create/', () => {
 
 
 describe('PUT  ' + URL +'/user/update/', () => {
-    it('It should update a user', (done) => {
+    it('It should update a user with username:Char002 to John12', (done) => {
       chai
         .request(server)
         .put('/user/update')
-        .send({'find_username': "Charlie", 'update_username': "John"})
+        .send({'find_username': "Char002",
+               'first_name': "John",
+               'last_name': "Duo",
+               'email': "JohnDuo@gmail.com",
+               'username': "John12",
+               'password':"QWERY@#$"
+              })
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
@@ -51,11 +57,11 @@ describe('PUT  ' + URL +'/user/update/', () => {
 
 
 describe('POST  ' + URL +'/user/find/', () => {
-    it('It should find a user', (done) => {
+    it('It should find a user the user with username: John12', (done) => {
       chai
         .request(server)
         .post('/user/find/')
-        .send({'username': "John"})
+        .send({'username': "John12"})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
@@ -67,11 +73,11 @@ describe('POST  ' + URL +'/user/find/', () => {
 
 
 describe('DELETE ' + URL +'/user/delete/', () => {
-    it('It should delete a user', (done) => {
+    it('It should delete a user with username: John12', (done) => {
       chai
         .request(server)
         .delete('/user/delete')
-        .send({'username':"John"})
+        .send({'username':"John12"})
         .end((err, res) => {
           res.should.have.status(200);
           (res.body).should.be.a('object');
